@@ -1,5 +1,5 @@
 // Importar los metodos de api.js
-import { getAlmacenropa, getAlmacenropaById, updateRopa, deleteRopa } from "./api";
+import { getAlmacenropa, getAlmacenropaByID, updateRopa, deleteRopa } from "./api.js";
 
 // Traer todos los productos y mostrarlos en la pagina principal
 document.addEventListener("DOMContentLoaded", async () => {
@@ -7,21 +7,20 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const products = await getAlmacenropa();
     ropaList.innerHTML = products.map(ropa => `
-         <div class="col-xs-12 col-sm-6 col-md-3 card">
-         <img class="card-img-top" src="${ropa.imgUrl}">
-            <div class="card-body d-flex flex-column justify-content-end">
-                <h5 class="card-title">${ropa.name}</h5>
-                <p class="card-text">${ropa.price}</p>
-                <a onclick="viewRopa(${ropa.id})" class=btn btn-primary">Ver mas<a/>
-            </div>
+      <div class="col-xs-12 col-sm-6 col-md-3 card">
+      <img class="card-img-top" src="${ropa.imgUrl}">
+        <div class="card-body d-flex flex-column justify-content-end">
+            <h5 class="card-title">${ropa.name}</h5>
+            <p class="card-text">${ropa.price}</p>
+            <a onclick="viewRopa(${ropa.id})" class=btn btn-primary">Ver mas<a/>
         </div>
-        `).json("");
-
+    </div>
+    `).join("");
 });
 
 // Crear la vista de detalles para cada producto de ropa al dar click en el boton ver más
 window.viewAlmacenropa = async (id) => {
-    const ropa = await getAlmacenropaById(id);
+    const ropa = await getAlmacenropaByID(id);
     const ropaDetails = `
       <div class="col">
         <img class="img-fluid" src="${ropa.imgUrl}">
@@ -37,7 +36,7 @@ window.viewAlmacenropa = async (id) => {
   
   // Habilitamos el formulario para editar la ropa
 window.enableEdit = async (id) => {
-    const ropa = await getAlmacenropaById(id);
+    const ropa = await getAlmacenropaByID(id);
     const editForm = `
       <div class="row gap-3">
         <input type="text" id="name" value="${ropa.name}">
